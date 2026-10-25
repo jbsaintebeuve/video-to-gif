@@ -1,26 +1,26 @@
 #!/usr/bin/env node
-// Génère assets/demo.svg, la démo animée en haut du README.
+// Builds assets/demo.svg, the animated terminal demo at the top of the README.
 //
-//   node assets/demo/build.mjs            écrit assets/demo.svg
-//   node assets/demo/build.mjs --at 9.5   affiche l'image figée à 9,5 s
-//   node assets/demo/build.mjs --check    échoue si assets/demo.svg n'est pas à jour
+//   node assets/demo/build.mjs            writes assets/demo.svg
+//   node assets/demo/build.mjs --at 9.5   prints a frame frozen at 9.5 s
+//   node assets/demo/build.mjs --check    fails if assets/demo.svg is stale
 //
-// Uniquement des keyframes CSS, sans script : GitHub retire le JavaScript des SVG.
-// Chaque ligne utilise textLength, pour que les colonnes restent alignées quelle
-// que soit la police monospace du lecteur. Les sorties viennent de ./scenario.sh,
-// qui lance le vrai vid2gif (et de vid2gif/desktop.py pour `vid2gif setup`).
-// Même moteur que la démo de https://github.com/jbsaintebeuve/wt.
+// Pure CSS keyframes, no script: GitHub strips JavaScript from SVG images.
+// Every line uses textLength, so columns stay aligned whatever monospace
+// font the viewer has. Output text comes from ./scenario.sh, which runs the
+// real vid2gif (and from vid2gif/desktop.py for `vid2gif setup`).
+// Same engine as the demo in https://github.com/jbsaintebeuve/wt.
 
 import { readFileSync, writeFileSync } from "node:fs";
 
 const FONT = 14.5;
-const CW = 8.7; // avance forcée par caractère
+const CW = 8.7; // forced advance per character
 const LH = 25;
 const W = 860;
-const PAD = 20; // marge autour de la fenêtre, pour l'ombre
-const BAR = 40; // hauteur de la barre de titre
-const X0 = 46; // première colonne de texte
-const Y0 = BAR + 34; // ligne de base de la première rangée
+const PAD = 20; // margin around the window, room for the shadow
+const BAR = 40; // title bar height
+const X0 = 46; // first text column
+const Y0 = BAR + 34; // baseline of the first row
 const ROWS = 12;
 const H = BAR + 34 + (ROWS - 1) * LH + 26;
 
@@ -45,7 +45,7 @@ function screen(caption, build) {
   scr = { caption, start: t, rows: [], toasts: [] };
   t += 0.35;
   build();
-  t += 2.3; // garde l'état final à l'écran
+  t += 2.3; // hold the final state
   scr.end = t;
   screens.push(scr);
 }
@@ -86,38 +86,38 @@ function idle(dir) {
 
 const ok = (text, cls = "text") => [["✓", "green b"], [" " + text, cls]];
 
-screen("vid2gif setup : le clic droit et le raccourci ⌃⌥⌘G en une commande", () => {
+screen("vid2gif setup: the right-click action and ⌃⌥⌘G in one command", () => {
   cmd(HOME, "vid2gif setup");
   t += 0.3;
-  out(ok("Quick Action « Convertir en GIF »"), {}, 0.18);
-  out(ok("Quick Action « Lien vidéo en GIF »"), {}, 0.18);
-  out(ok("Quick Action « GIF depuis le lien copié »"), {}, 0.18);
-  out(ok("Raccourci ⌃⌥⌘G → « GIF depuis le lien copié »"), { badge: "ok", hl: ["green", 0, 47] }, 0.3);
+  out(ok('Quick Action "Convert to GIF"'), {}, 0.18);
+  out(ok('Quick Action "Video Link to GIF"'), {}, 0.18);
+  out(ok('Quick Action "GIF from Copied Link"'), {}, 0.18);
+  out(ok('Shortcut ⌃⌥⌘G → "GIF from Copied Link"'), { badge: "ok", hl: ["green", 0, 40] }, 0.3);
   out("");
-  out([["C'est prêt :", "text b"]]);
-  out([["  • Finder : clic droit sur une vidéo → ", "dim"], ["Actions rapides → Convertir en GIF", "text"]],
-    { hl: ["violet", 40, 74] });
-  out([["  • Lien vidéo copié → ", "dim"], ["⌃⌥⌘G", "tool"]], { hl: ["violet", 23, 27] });
-  out([["Le GIF est copié : collez-le avec ⌘V.", "dim"]]);
+  out([["Ready:", "text b"]]);
+  out([["  • Finder: right-click a video → ", "dim"], ["Quick Actions → Convert to GIF", "text"]],
+    { hl: ["violet", 34, 64] });
+  out([["  • Copied video link → ", "dim"], ["⌃⌥⌘G", "tool"]], { hl: ["violet", 24, 28] });
+  out([["The GIF lands on your clipboard: paste it with ⌘V.", "dim"]]);
   idle(HOME);
 });
 
-screen("Un lien X → un GIF déjà dans le presse-papiers", () => {
+screen("An X link → a GIF already on your clipboard", () => {
   cmd(HOME, `vid2gif ${X_URL} --copy`);
-  out([["↓ ", "cmd"], [X_URL, "dim"]], {}, 1.3); // téléchargement
+  out([["↓ ", "cmd"], [X_URL, "dim"]], {}, 1.3); // download
   out([["→ ", "cmd"], [`~/Downloads/${X_GIF}`, "path"]], {}, 1.6); // conversion
-  out(ok("5.0 Mo (480px, 15 i/s)", "green b"), { badge: "ok", hl: ["green", 0, 24] });
+  out(ok("5.0 MB (480px, 15 fps)", "green b"), { badge: "ok", hl: ["green", 0, 24] });
   scr.toasts.push(t + 0.25);
   t += 0.6;
   idle(HOME);
   t += 1.2;
 });
 
-screen("Une vidéo locale : un extrait, allégé automatiquement", () => {
-  cmd(HOME, "vid2gif Movies/vacances.mov -s 12 -t 4 --max-mb 3");
-  out([["→ ", "cmd"], ["~/Movies/vacances.gif", "path"]], {}, 1.3);
-  out([["  5.0 Mo > limite 3.0 Mo, nouvel essai plus léger…", "yellow"]], { hl: ["yellow", 2, 51] }, 1.2);
-  out(ok("2.9 Mo (372px, 15 i/s)", "green b"), { badge: "ok", hl: ["green", 0, 24] });
+screen("A local video: trimmed, then shrunk automatically", () => {
+  cmd(HOME, "vid2gif Movies/holiday.mov -s 12 -t 4 --max-mb 3");
+  out([["→ ", "cmd"], ["~/Movies/holiday.gif", "path"]], {}, 1.3);
+  out([["  5.0 MB > 3.0 MB limit, retrying smaller…", "yellow"]], { hl: ["yellow", 2, 42] }, 1.2);
+  out(ok("2.9 MB (372px, 15 fps)", "green b"), { badge: "ok", hl: ["green", 0, 24] });
   idle(HOME);
 });
 
@@ -132,7 +132,7 @@ const len = (segs) => segs.reduce((n, [s]) => n + [...s].length, 0);
 let css = "";
 let k = 0;
 
-// Déclare des keyframes à partir d'étapes [temps, déclarations, timing?] ; renvoie une classe.
+// Declares keyframes from [time, declarations, timing?] stops; returns a class.
 function anim(stops, extra = "") {
   const name = `k${k++}`;
   const all = [[0, stops[0][1]], ...stops, [T, stops[stops.length - 1][1]]];
@@ -179,7 +179,7 @@ function highlight([color, from, to], y, at) {
     `width="${((to - from) * CW + 10).toFixed(1)}" height="23" rx="5" fill="${HL[color]}"/></g>`;
 }
 
-// Notification macOS « GIF prêt » qui glisse depuis la droite, comme celle de vid2gif --notify.
+// The macOS "GIF ready" notification sliding in from the right, as shown by vid2gif --notify.
 function toast(at) {
   const TW = 384;
   const TH = 80;
@@ -193,12 +193,12 @@ function toast(at) {
     `<rect width="${TW}" height="${TH}" rx="13" fill="#1d2130" stroke="#323848" filter="url(#toastShadow)"/>` +
     `<rect x="14" y="21" width="38" height="38" rx="9" fill="${C.brand}"/>` +
     `<text class="icon" x="33" y="45" text-anchor="middle">VT</text>` +
-    `<text class="tt" x="64" y="28">GIF prêt</text>` +
-    `<g transform="translate(131 23.5)"><circle r="6.5" fill="${C.green}" fill-opacity=".18" stroke="${C.green}" stroke-width="1"/>` +
+    `<text class="tt" x="64" y="28">GIF ready</text>` +
+    `<g transform="translate(139 23.5)"><circle r="6.5" fill="${C.green}" fill-opacity=".18" stroke="${C.green}" stroke-width="1"/>` +
     `<path d="M-2.8 0.2 L-0.8 2.2 L3 -2" fill="none" stroke="${C.green}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g>` +
-    `<text class="tb" x="64" y="47">${esc(X_GIF)} — 5.0 Mo</text>` +
-    `<text class="tm" x="${TW - 14}" y="28" text-anchor="end">maintenant</text>` +
-    `<text class="tk" x="64" y="65">copié, prêt à coller <tspan class="key">⌘V</tspan></text>` +
+    `<text class="tb" x="64" y="47">${esc(X_GIF)} — 5.0 MB</text>` +
+    `<text class="tm" x="${TW - 14}" y="28" text-anchor="end">now</text>` +
+    `<text class="tk" x="64" y="65">copied, paste with <tspan class="key">⌘V</tspan></text>` +
     `</g></g>`;
 }
 
@@ -216,8 +216,8 @@ function renderRow(r, i) {
   return `<g class="${show(r.at)}">${g}</g>`;
 }
 
-// Un curseur suivi d'un masque couleur de fond glisse d'un caractère par étape,
-// révélant la commande comme si elle était tapée.
+// A cursor followed by a mask the colour of the background slides right one
+// character per step, uncovering the command as if it were being typed.
 function typing(r, y) {
   const slide = anim([
     [r.typeStart, "transform:translateX(0)", `steps(${r.n},end)`],
@@ -244,7 +244,7 @@ function render() {
 
   const progress = anim([[0, "transform:scaleX(0)"], [T, "transform:scaleX(1)"]]);
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W + 2 * PAD} ${H + 2 * PAD}" width="${W + 2 * PAD}" height="${H + 2 * PAD}" xml:space="preserve" role="img" aria-label="Démo de vid2gif : vid2gif setup installe les actions rapides et le raccourci ⌃⌥⌘G ; un lien X devient un GIF copié dans le presse-papiers, avec une notification ; une vidéo locale est découpée et allégée automatiquement sous 3 Mo.">
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W + 2 * PAD} ${H + 2 * PAD}" width="${W + 2 * PAD}" height="${H + 2 * PAD}" xml:space="preserve" role="img" aria-label="vid2gif demo: vid2gif setup installs the Quick Actions and the ⌃⌥⌘G shortcut; an X link becomes a GIF copied to the clipboard, with a notification; a local video is trimmed and automatically shrunk under 3 MB.">
 <style>
 ${css}text{font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;font-size:${FONT}px;fill:${C.text};white-space:pre;font-variant-ligatures:none}
 .cap,.tt,.tb,.tm,.tk,.icon{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
@@ -291,10 +291,10 @@ if (at !== -1) {
     current = readFileSync(file, "utf8");
   } catch {}
   if (current !== svg) {
-    console.error("assets/demo.svg n'est pas à jour : lancez node assets/demo/build.mjs");
+    console.error("assets/demo.svg is stale: run node assets/demo/build.mjs");
     process.exit(1);
   }
 } else {
   writeFileSync(file, svg);
-  console.error(`assets/demo.svg écrit : boucle de ${T}s, ${svg.length} octets`);
+  console.error(`wrote assets/demo.svg: ${T}s loop, ${svg.length} bytes`);
 }

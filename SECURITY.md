@@ -1,27 +1,27 @@
-# Sécurité
+# Security
 
-## Signaler une vulnérabilité
+## Reporting a vulnerability
 
-Merci de ne pas ouvrir d'issue publique. Utilisez **Security → Report a vulnerability** sur GitHub (signalement privé). Une réponse est donnée sous 7 jours.
+Please don't open a public issue. Use **Security → Report a vulnerability** on GitHub to report privately. You'll get an answer within 7 days.
 
-## Modèle de menace
+## Threat model
 
-vid2gif traite des données non fiables : des liens copiés, des vidéos téléchargées, et du texte sélectionné dans n'importe quelle application. Les protections en place :
+vid2gif handles untrusted data: copied links, downloaded videos, and text selected in any app. Protections in place:
 
-| Risque | Protection |
+| Risk | Protection |
 |---|---|
-| Injection de commande | Aucun shell n'est utilisé (`subprocess` reçoit des listes d'arguments). Les textes passés à AppleScript, JXA ou PowerShell transitent par `argv` et ne sont jamais concaténés au code. |
-| Injection d'options dans yt-dlp | L'URL est placée après `--`. Seuls les liens `http(s)://` sont acceptés. |
-| Vidéo piégée (playlist HLS, `concat:`…) | ffmpeg et ffprobe sont lancés avec `-protocol_whitelist file` : ils ne peuvent ouvrir aucune URL réseau. |
-| Chemin de sortie (`../`, nom commençant par `-`) | Les noms de fichiers sont nettoyés par `safe_name`. Les fichiers téléchargés doivent se trouver dans le dossier temporaire de travail. |
-| Abus de ressources | Téléchargement limité à 500 Mo, GIF limité aux 60 premières secondes sauf avec `-t`, taille cible fixée à 15 Mo. |
-| Détournement du module Python | Le lanceur Homebrew utilise `python -P -s` et les Quick Actions font `cd /` : un dossier `vid2gif/` posé dans le répertoire courant n'est jamais chargé. |
-| Chaîne d'approvisionnement | Aucune dépendance Python. Les Actions GitHub sont épinglées par SHA et mises à jour par Dependabot (après 7 jours de délai). La formule Homebrew vérifie le SHA-256 de l'archive. |
+| Command injection | No shell is used: `subprocess` gets argument lists. Text passed to AppleScript, JXA or PowerShell goes through `argv` and is never concatenated into code. |
+| Option injection into yt-dlp | The URL comes after `--`. Only `http(s)://` links are accepted. |
+| Booby-trapped video (HLS playlist, `concat:`…) | ffmpeg and ffprobe run with `-protocol_whitelist file`, so they cannot open any network URL. |
+| Output path (`../`, names starting with `-`) | `safe_name` cleans file names. Downloaded files must stay inside the temporary work folder. |
+| Resource abuse | Downloads are capped at 500 MB. GIFs keep only the first 60 seconds unless you pass `-t`. The target size is 15 MB. |
+| Python module hijacking | The Homebrew launcher runs `python -P -s`, and the Quick Actions `cd /` first, so a `vid2gif/` folder in the current directory is never loaded. |
+| Supply chain | No Python dependencies. GitHub Actions are pinned by SHA and updated by Dependabot after a 7-day cooldown. The Homebrew formula checks the archive's SHA-256. |
 
-## Contrôles automatiques (`.github/workflows/security.yml`)
+## Automated checks (`.github/workflows/security.yml`)
 
-- **CodeQL** (`security-extended`) analyse le code Python et les workflows.
-- **Bandit** fait une analyse statique Python. B404, B603 et B607 sont ignorés : ce sont les usages volontaires de `subprocess` décrits plus haut.
-- **zizmor** audite la sécurité des workflows GitHub Actions.
-- **Dependency Review** s'exécute sur chaque pull request.
-- Ces analyses tournent aussi chaque semaine, même sans nouveau commit.
+- **CodeQL** (`security-extended`) scans the Python code and the workflows.
+- **Bandit** runs static analysis on the Python code. B404, B603 and B607 are skipped: they flag the deliberate `subprocess` use described above.
+- **zizmor** audits the security of the GitHub Actions workflows.
+- **Dependency Review** runs on every pull request.
+- These scans also run every week, even without new commits.

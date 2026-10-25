@@ -5,79 +5,79 @@
 [![CI](https://github.com/jbsaintebeuve/video-to-gif/actions/workflows/ci.yml/badge.svg)](https://github.com/jbsaintebeuve/video-to-gif/actions/workflows/ci.yml)
 [![Security](https://github.com/jbsaintebeuve/video-to-gif/actions/workflows/security.yml/badge.svg)](https://github.com/jbsaintebeuve/video-to-gif/actions/workflows/security.yml)
 
-Transforme une vidéo (un fichier local, ou un lien X / YouTube / Instagram / TikTok…) en GIF de bonne qualité, prêt à coller (⌘V) ou à enregistrer.
+Turn a video into a good-looking GIF, ready to paste (⌘V) or save. The video can be a local file or a link from X, YouTube, Instagram, TikTok and more.
 
-<img src="assets/demo.svg" width="100%" alt="Démo animée : vid2gif setup installe les actions rapides et le raccourci ⌃⌥⌘G ; un lien X devient un GIF copié dans le presse-papiers, avec une notification « GIF prêt » ; une vidéo locale est découpée avec -s et -t puis allégée automatiquement sous 3 Mo.">
+<img src="assets/demo.svg" width="100%" alt="Animated demo: vid2gif setup installs the Quick Actions and the ⌃⌥⌘G shortcut; an X link becomes a GIF copied to the clipboard, with a GIF ready notification; a local video is trimmed with -s and -t, then automatically shrunk under 3 MB.">
 
-## Installation (macOS)
+## Install (macOS)
 
 ```sh
 brew install jbsaintebeuve/tap/vid2gif
 vid2gif setup
 ```
 
-Homebrew installe aussi `ffmpeg` et `yt-dlp`. La commande `vid2gif setup` ajoute ensuite :
+Homebrew also installs `ffmpeg` and `yt-dlp`. `vid2gif setup` then adds:
 
-| Où | Action rapide | Ce qu'elle fait |
+| Where | Quick Action | What it does |
 |---|---|---|
-| Finder, clic droit sur une vidéo → **Actions rapides** | **Convertir en GIF** | crée le GIF à côté de la vidéo et le copie |
-| N'importe quelle app, clic droit sur un lien sélectionné → **Services** | **Lien vidéo en GIF** | télécharge la vidéo et la convertit |
-| Partout, avec **⌃⌥⌘G** | **GIF depuis le lien copié** | utilise le lien présent dans le presse-papiers |
+| Finder: right-click a video → **Quick Actions** | **Convert to GIF** | Creates the GIF next to the video and copies it |
+| Any app: right-click a selected link → **Services** | **Video Link to GIF** | Downloads the video and converts it |
+| Anywhere: **⌃⌥⌘G** | **GIF from Copied Link** | Uses the link on your clipboard |
 
-**Pour un post X :** *Partager → Copier le lien*, puis ⌃⌥⌘G. Une notification indique quand le GIF est prêt (il est aussi enregistré dans `~/Downloads`). Il ne reste qu'à le coller avec ⌘V.
+**For an X post:** choose *Share → Copy link*, then press ⌃⌥⌘G. A notification tells you when the GIF is ready. It is also saved in `~/Downloads`. Paste it with ⌘V.
 
-Le raccourci clavier peut être changé dans Réglages Système → Clavier → Raccourcis clavier → Services. `vid2gif setup` ne remplace jamais un raccourci que vous avez défini vous-même.
+You can change the shortcut in System Settings → Keyboard → Keyboard Shortcuts → Services. `vid2gif setup` never replaces a shortcut you set yourself.
 
-- Mise à jour : `brew upgrade vid2gif` (les actions rapides suivent automatiquement).
-- Désinstallation : `vid2gif uninstall && brew uninstall vid2gif`.
-- Journal : `~/Library/Logs/vid2gif.log`.
+- Update: `brew upgrade vid2gif`. The Quick Actions pick up the new version automatically.
+- Uninstall: `vid2gif uninstall && brew uninstall vid2gif`.
+- Log: `~/Library/Logs/vid2gif.log`.
 
-## Linux et Windows
+## Linux and Windows
 
 ```sh
 pipx install git+https://github.com/jbsaintebeuve/video-to-gif
 ```
 
-Il faut aussi `ffmpeg` et `yt-dlp` (`apt install ffmpeg yt-dlp`, `winget install ffmpeg yt-dlp`). Sous Linux, la copie dans le presse-papiers demande `wl-clipboard` ou `xclip`.
+You also need `ffmpeg` and `yt-dlp` (`apt install ffmpeg yt-dlp`, `winget install ffmpeg yt-dlp`). On Linux, copying to the clipboard needs `wl-clipboard` or `xclip`.
 
-## Utilisation en ligne de commande
+## Command line
 
 ```sh
 vid2gif https://x.com/weirdnotwild/status/2114199180243857583 --copy
-vid2gif clip.mov -w 360 -r 12 -s 1.5 -t 4      # largeur 360px, 12 i/s, de 1,5 s à 5,5 s
-vid2gif --clipboard --copy                     # lien copié → GIF copié
+vid2gif clip.mov -w 360 -r 12 -s 1.5 -t 4      # 360 px wide, 12 fps, from 1.5 s to 5.5 s
+vid2gif --clipboard --copy                     # copied link → copied GIF
 ```
 
-| Option | Défaut | Rôle |
+| Option | Default | Effect |
 |---|---|---|
-| `-w, --width` | 480 | largeur maximale (la vidéo n'est jamais agrandie) |
-| `-r, --fps` | 15 | images par seconde |
-| `-s, --start` / `-t, --duration` | toute la vidéo, 60 s max | découpe un extrait |
-| `--max-mb` | 15 | réduit automatiquement le GIF pour rester sous ce poids (`0` = pas de limite) |
-| `-c, --copy` | — | copie le GIF dans le presse-papiers |
-| `-o, --outdir` | à côté du fichier / `~/Downloads` | dossier de sortie |
-| `--cookies-from-browser` | — | `chrome`, `safari`, `firefox`… pour les vidéos qui demandent d'être connecté |
+| `-w, --width` | 480 | Maximum width. The video is never upscaled. |
+| `-r, --fps` | 15 | Frames per second |
+| `-s, --start` / `-t, --duration` | Whole video, 60 s max | Trims a clip |
+| `--max-mb` | 15 | Shrinks the GIF automatically to stay under this size (`0` = no limit) |
+| `-c, --copy` | Off | Copies the GIF to the clipboard |
+| `-o, --outdir` | Next to the file / `~/Downloads` | Output folder |
+| `--cookies-from-browser` | None | `chrome`, `safari`, `firefox`… for videos that require being logged in |
 
-## Développement
+## Development
 
 ```sh
 python3 -m venv .venv && .venv/bin/pip install pytest ruff
-.venv/bin/pytest            # tests (ffmpeg requis pour les tests d'intégration)
+.venv/bin/pytest            # tests (integration tests need ffmpeg)
 .venv/bin/ruff check . && .venv/bin/ruff format --check .
-python3 -m vid2gif --help   # lancer depuis les sources
+python3 -m vid2gif --help   # run from source
 ```
 
-La démo animée du README (`assets/demo.svg`) est générée par `node assets/demo/build.mjs`. Ses textes doivent correspondre à la sortie de `assets/demo/scenario.sh`, qui lance le vrai vid2gif. La CI échoue si le SVG n'est pas à jour.
+`node assets/demo/build.mjs` generates the animated demo (`assets/demo.svg`). Its text must match the output of `assets/demo/scenario.sh`, which runs the real vid2gif. CI fails if the SVG is stale.
 
-La CI (`.github/workflows/ci.yml`) lance le lint et les tests sur macOS, Linux et Windows. Elle installe aussi la formule Homebrew à partir des sources du commit, puis vérifie `brew test`, `brew audit` et `vid2gif setup`. Les contrôles de sécurité sont décrits dans [SECURITY.md](SECURITY.md).
+CI (`.github/workflows/ci.yml`) runs lint and tests on macOS, Linux and Windows. It also installs the Homebrew formula from the commit's source, then checks `brew test`, `brew audit` and `vid2gif setup`. [SECURITY.md](SECURITY.md) describes the security checks.
 
-### Publier une version
+### Releasing
 
-1. Changer `__version__` dans `vid2gif/__init__.py`, puis commit sur `main`.
+1. Bump `__version__` in `vid2gif/__init__.py` and merge it into `main`.
 2. `git tag v0.2.0 && git push origin v0.2.0`
 
-Le workflow `release.yml` relance la CI, crée la release GitHub et met à jour la formule dans [jbsaintebeuve/homebrew-tap](https://github.com/jbsaintebeuve/homebrew-tap). Il a besoin du secret `HOMEBREW_TAP_TOKEN` : un token *fine-grained* avec les droits Contents en lecture/écriture, limité au dépôt `homebrew-tap`.
+The `release.yml` workflow reruns CI, creates the GitHub release and updates the formula in [jbsaintebeuve/homebrew-tap](https://github.com/jbsaintebeuve/homebrew-tap). It needs the `HOMEBREW_TAP_TOKEN` secret: a fine-grained token with read/write Contents access to the `homebrew-tap` repository only.
 
-## Fonctionnement
+## How it works
 
-`yt-dlp` télécharge la vidéo, puis `ffmpeg` génère une palette optimisée et la convertit en GIF en boucle. Si le GIF dépasse `--max-mb`, l'outil recommence en réduisant la largeur, puis le nombre d'images par seconde et de couleurs.
+`yt-dlp` downloads the video. `ffmpeg` then builds an optimized palette and converts the video to a looping GIF. If the GIF is larger than `--max-mb`, vid2gif tries again with a smaller width, then fewer frames per second and fewer colors.

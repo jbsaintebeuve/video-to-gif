@@ -1,7 +1,7 @@
-"""Intégration bureau : `vid2gif setup` / `vid2gif uninstall`.
+"""Desktop integration: `vid2gif setup` / `vid2gif uninstall`.
 
-macOS : crée des Quick Actions dans ~/Library/Services (clic droit dans le Finder,
-menu Services, raccourci clavier ⌃⌥⌘G pour « GIF depuis le lien copié »).
+macOS: creates Quick Actions in ~/Library/Services (Finder right-click, Services
+menu, and the ⌃⌥⌘G keyboard shortcut for "GIF from Copied Link").
 """
 
 import argparse
@@ -19,18 +19,18 @@ from vid2gif.cli import SYSTEM, Vid2GifError
 SERVICES = Path.home() / "Library/Services"
 LOG = "$HOME/Library/Logs/vid2gif.log"
 PBS = "/System/Library/CoreServices/pbs"
-CLIPBOARD_SERVICE = "GIF depuis le lien copié"
+CLIPBOARD_SERVICE = "GIF from Copied Link"
 DEFAULT_SHORTCUT = "@~^g"  # ⌃⌥⌘G (@ = ⌘, ~ = ⌥, ^ = ⌃, $ = ⇧)
 
 WORKFLOWS = [
     {
-        "name": "Convertir en GIF",
+        "name": "Convert to GIF",
         "input": "com.apple.Automator.fileSystemObject.movie",
         "send_file_types": ["public.movie"],
         "args": '--copy --notify "$@"',
     },
     {
-        "name": "Lien vidéo en GIF",
+        "name": "Video Link to GIF",
         "input": "com.apple.Automator.text",
         "send_types": ["public.utf8-plain-text"],
         "args": '--copy --notify "$@"',
@@ -42,10 +42,17 @@ WORKFLOWS = [
     },
 ]
 
+# Names used by vid2gif before 0.1.0 (French): removed on setup, shortcut carried over.
+LEGACY_NAMES = {
+    "Convertir en GIF": "Convert to GIF",
+    "Lien vidéo en GIF": "Video Link to GIF",
+    "GIF depuis le lien copié": CLIPBOARD_SERVICE,
+}
+
 
 def launcher():
-    """Commande stable pour relancer vid2gif depuis une Quick Action."""
-    exe = os.environ.get("VID2GIF_EXE")  # défini par le lanceur Homebrew (chemin opt/, stable)
+    """A stable command for Quick Actions to run vid2gif."""
+    exe = os.environ.get("VID2GIF_EXE")  # set by the Homebrew launcher (opt/ path, stable across upgrades)
     if exe and Path(exe).is_file():
         return [exe]
     found = shutil.which("vid2gif")
@@ -55,7 +62,7 @@ def launcher():
 
 
 def shell_command(args):
-    # `cd /` : le dossier courant ne peut pas masquer le module vid2gif.
+    # `cd /`: the working directory can never shadow the vid2gif module.
     return 'cd / && %s %s >>"%s" 2>&1' % (" ".join(shlex.quote(p) for p in launcher()), args, LOG)
 
 
@@ -89,7 +96,7 @@ def document_wflow(wf, command):
         "ActionParameters": {
             "COMMAND_STRING": command,
             "CheckedForUserDefaultShell": True,
-            "inputMethod": 1,  # entrée passée en arguments ("$@")
+            "inputMethod": 1,  # input passed as arguments ("$@")
             "shell": "/bin/zsh",
             "source": "",
         },
@@ -166,7 +173,7 @@ def _write_pbs(prefs):
 
 
 def set_shortcut(name, key):
-    """Ajoute un raccourci clavier au service, sans écraser un réglage existant."""
+    """Adds a keyboard shortcut to the service, never overwriting an existing one."""
     prefs = _read_pbs()
     entry = prefs.setdefault("NSServicesStatus", {}).setdefault(_service_key(name), {})
     if entry.get("key_equivalent"):
@@ -174,6 +181,18 @@ def set_shortcut(name, key):
     entry["key_equivalent"] = key
     _write_pbs(prefs)
     return True
+
+
+def migrate_shortcut(old, new):
+    """Moves the shortcut of a renamed service, unless the new name already has one."""
+    prefs = _read_pbs()
+    status = prefs.get("NSServicesStatus", {})
+    entry = status.pop(_service_key(old), None)
+    if entry is None:
+        return
+    if entry.get("key_equivalent") and not status.get(_service_key(new), {}).get("key_equivalent"):
+        status.setdefault(_service_key(new), {})["key_equivalent"] = entry["key_equivalent"]
+    _write_pbs(prefs)
 
 
 def remove_shortcut(name):
@@ -189,7 +208,12 @@ def refresh_services():
 
 
 def _remove_legacy():
-    """Nettoie l'ancienne installation par script (avant le paquet)."""
+    """Removes earlier installs: the pre-package script and the French-named Quick Actions."""
+    for old, new in LEGACY_NAMES.items():
+        bundle = SERVICES / (old + ".workflow")
+        if bundle.exists():
+            shutil.rmtree(bundle)
+            migrate_shortcut(old, new)
     legacy_dir = Path.home() / "Library/Application Support/vid2gif"
     legacy_bin = Path.home() / ".local/bin/vid2gif"
     if legacy_bin.is_symlink() and legacy_dir in Path(os.readlink(legacy_bin)).parents:
@@ -199,12 +223,12 @@ def _remove_legacy():
 
 def _require_macos():
     if SYSTEM != "Darwin":
-        raise Vid2GifError("L'intégration bureau n'existe pour l'instant que sur macOS. Utilisez la commande vid2gif.")
+        raise Vid2GifError("Desktop integration is macOS-only for now. Use the vid2gif command.")
 
 
 def setup(argv=()):
-    p = argparse.ArgumentParser(prog="vid2gif setup", description="Installe les Quick Actions macOS.")
-    p.add_argument("--no-shortcut", action="store_true", help="ne pas définir le raccourci ⌃⌥⌘G")
+    p = argparse.ArgumentParser(prog="vid2gif setup", description="Install the macOS Quick Actions.")
+    p.add_argument("--no-shortcut", action="store_true", help="do not set the ⌃⌥⌘G shortcut")
     args = p.parse_args(list(argv))
     _require_macos()
 
@@ -212,19 +236,19 @@ def setup(argv=()):
     SERVICES.mkdir(parents=True, exist_ok=True)
     for wf in WORKFLOWS:
         write_workflow(wf)
-        print("✓ Quick Action « %s »" % wf["name"])
+        print('✓ Quick Action "%s"' % wf["name"])
     if not args.no_shortcut and set_shortcut(CLIPBOARD_SERVICE, DEFAULT_SHORTCUT):
-        print("✓ Raccourci ⌃⌥⌘G → « %s »" % CLIPBOARD_SERVICE)
+        print('✓ Shortcut ⌃⌥⌘G → "%s"' % CLIPBOARD_SERVICE)
     refresh_services()
 
     missing = [t for t in ("ffmpeg", "yt-dlp") if not shutil.which(t)]
     if missing:
-        print("⚠️  À installer : brew install %s" % " ".join(missing))
+        print("⚠️  Missing: brew install %s" % " ".join(missing))
     print(
-        "\nC'est prêt :\n"
-        "  • Finder : clic droit sur une vidéo → Actions rapides → Convertir en GIF\n"
-        "  • Lien vidéo copié → ⌃⌥⌘G\n"
-        "Le GIF est copié : collez-le avec ⌘V."
+        "\nReady:\n"
+        "  • Finder: right-click a video → Quick Actions → Convert to GIF\n"
+        "  • Copied video link → ⌃⌥⌘G\n"
+        "The GIF lands on your clipboard: paste it with ⌘V."
     )
     return 0
 
@@ -236,5 +260,5 @@ def uninstall():
     remove_shortcut(CLIPBOARD_SERVICE)
     _remove_legacy()
     refresh_services()
-    print("Quick Actions vid2gif supprimées.")
+    print("vid2gif Quick Actions removed.")
     return 0

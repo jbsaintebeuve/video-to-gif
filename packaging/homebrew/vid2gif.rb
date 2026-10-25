@@ -13,7 +13,7 @@ class Vid2gif < Formula
   def install
     libexec.install "vid2gif"
     python = formula_opt_bin("python@3.15")/"python3.15"
-    # -P : le dossier courant ne peut pas masquer le module ; -s : ignore le site utilisateur.
+    # -P: the working directory cannot shadow the module; -s: ignore the user site.
     (bin/"vid2gif").write <<~SH
       #!/bin/sh
       export PYTHONPATH="#{libexec}"
@@ -24,8 +24,8 @@ class Vid2gif < Formula
 
   def caveats
     <<~EOS
-      Pour ajouter le clic droit « Convertir en GIF » dans le Finder
-      et le raccourci ⌃⌥⌘G (lien vidéo copié → GIF), lancez une fois :
+      To add the "Convert to GIF" right-click action in Finder
+      and the ⌃⌥⌘G shortcut (copied video link → GIF), run once:
         vid2gif setup
     EOS
   end

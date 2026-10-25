@@ -1,7 +1,7 @@
 name: Release
 
-# Pousser un tag vX.Y.Z (identique à vid2gif/__init__.py) publie la release GitHub
-# et met à jour la formule dans jbsaintebeuve/homebrew-tap.
+# Pushing a vX.Y.Z tag (matching vid2gif/__init__.py) publishes the GitHub release
+# and updates the formula in jbsaintebeuve/homebrew-tap.
 on:
   push:
     tags: ["v*.*.*"]
@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
-      contents: write # création de la release GitHub
+      contents: write # create the GitHub release
     env:
       TAG: ${{ github.ref_name }}
       GH_TOKEN: ${{ github.token }}
@@ -29,7 +29,7 @@ jobs:
       - name: Tag matches package version
         run: |
           version=$(sed -n 's/^__version__ = "\(.*\)"/\1/p' vid2gif/__init__.py)
-          test "v$version" = "$TAG" || { echo "::error::tag $TAG ≠ version $version"; exit 1; }
+          test "v$version" = "$TAG" || { echo "::error::tag $TAG does not match version $version"; exit 1; }
       - name: Create GitHub release
         run: gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --title "$TAG" --generate-notes --verify-tag
 
@@ -37,7 +37,7 @@ jobs:
     needs: release
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    environment: release # permet d'exiger une validation manuelle avant publication
+    environment: release # lets you require a manual approval before publishing
     env:
       TAG: ${{ github.ref_name }}
     steps:
@@ -63,7 +63,7 @@ jobs:
       - name: Push to tap
         working-directory: tap
         env:
-          # PAT fine-grained : Contents R/W sur jbsaintebeuve/homebrew-tap uniquement.
+          # Fine-grained PAT: Contents read/write on jbsaintebeuve/homebrew-tap only.
           TAP_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"

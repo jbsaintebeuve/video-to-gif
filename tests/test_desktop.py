@@ -22,7 +22,7 @@ def test_launcher_prefers_homebrew_path(fake_exe):
 def test_shell_command_quotes_paths(fake_exe):
     cmd = desktop.shell_command('--copy "$@"')
     assert cmd.startswith("cd / && " + shlex.quote(str(fake_exe)) + ' --copy "$@"')
-    assert "'" in cmd  # le chemin contenant un espace est protégé
+    assert "'" in cmd  # the path with a space is quoted
 
 
 @pytest.mark.parametrize("wf", desktop.WORKFLOWS, ids=lambda w: w["name"])
@@ -68,7 +68,25 @@ def test_shortcut_added_once_and_removed(monkeypatch):
 
     assert desktop.set_shortcut("GIF", "@~^g") is True
     assert store["prefs"]["NSServicesStatus"]["(null) - GIF - runWorkflowAsService"] == {"key_equivalent": "@~^g"}
-    # Un raccourci déjà défini (par l'utilisateur) n'est jamais écrasé.
+    # A shortcut that is already set (by the user) is never overwritten.
     assert desktop.set_shortcut("GIF", "@x") is False
     desktop.remove_shortcut("GIF")
     assert list(store["prefs"]["NSServicesStatus"]) == ["(null) - Autre - runWorkflowAsService"]
+
+
+def test_legacy_french_actions_are_migrated(tmp_path, monkeypatch, fake_exe):
+    old_key = "(null) - GIF depuis le lien copié - runWorkflowAsService"
+    new_key = "(null) - GIF from Copied Link - runWorkflowAsService"
+    store = {"prefs": {"NSServicesStatus": {old_key: {"key_equivalent": "@~^v"}}}}
+    monkeypatch.setattr(desktop, "_read_pbs", lambda: plistlib.loads(plistlib.dumps(store["prefs"])))
+    monkeypatch.setattr(desktop, "_write_pbs", lambda prefs: store.update(prefs=prefs))
+    services = tmp_path / "Services"
+    monkeypatch.setattr(desktop, "SERVICES", services)
+    for old in desktop.LEGACY_NAMES:
+        (services / (old + ".workflow") / "Contents").mkdir(parents=True)
+
+    desktop._remove_legacy()
+
+    assert not any(services.iterdir())
+    # The user's own shortcut follows the renamed action.
+    assert store["prefs"]["NSServicesStatus"] == {new_key: {"key_equivalent": "@~^v"}}

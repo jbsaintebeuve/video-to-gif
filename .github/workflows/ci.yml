@@ -29,7 +29,7 @@ jobs:
       - run: ruff format --check .
 
   demo:
-    # assets/demo.svg doit être régénéré quand assets/demo/build.mjs change.
+    # assets/demo.svg must be regenerated whenever assets/demo/build.mjs changes.
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -68,7 +68,7 @@ jobs:
       - run: python -m pytest -v
 
   macos-system-python:
-    # Le /usr/bin/python3 fourni par Apple (3.9) : celui des Mac sans Python Homebrew.
+    # Apple's /usr/bin/python3 (3.9): the one on Macs without Homebrew Python.
     runs-on: macos-latest
     timeout-minutes: 20
     steps:
@@ -81,7 +81,7 @@ jobs:
       - run: '"$RUNNER_TEMP/venv/bin/python" -m pytest -v'
 
   homebrew:
-    # Installe la formule depuis les sources du commit, comme le ferait un utilisateur.
+    # Installs the formula from the commit's source, as a user would.
     runs-on: macos-latest
     timeout-minutes: 30
     env:

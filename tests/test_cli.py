@@ -55,7 +55,7 @@ def test_unique_path(tmp_path):
 
 
 def test_expand_inputs_extracts_urls_from_text():
-    text = "regarde ça https://x.com/weirdnotwild/status/2114199180243857583 !"
+    text = "look at this https://x.com/weirdnotwild/status/2114199180243857583 !"
     assert cli.expand_inputs([text]) == ["https://x.com/weirdnotwild/status/2114199180243857583"]
 
 
@@ -76,7 +76,7 @@ def test_expand_inputs_rejects_garbage():
 
 
 def test_url_option_injection_is_not_a_url():
-    # Une « URL » qui commence par une option ne doit jamais être acceptée.
+    # A "URL" that starts with an option must never be accepted.
     assert not cli.URL_RE.match("--exec=touch /tmp/pwned")
 
 
@@ -98,9 +98,9 @@ def test_positive_args(flag):
 
 
 def test_human_size():
-    assert cli.human_size(512) == "512 o"
-    assert cli.human_size(2048) == "2.0 Ko"
-    assert cli.human_size(5 * 1024 * 1024) == "5.0 Mo"
+    assert cli.human_size(512) == "512 B"
+    assert cli.human_size(2048) == "2.0 KB"
+    assert cli.human_size(5 * 1024 * 1024) == "5.0 MB"
 
 
 def test_version_flag(capsys):
@@ -169,7 +169,7 @@ def test_start_and_duration(tmp_path):
 
 @needs_ffmpeg
 def test_ffmpeg_refuses_network_playlists(tmp_path):
-    # Une « vidéo » qui est en fait une playlist pointant vers un autre fichier/URL.
+    # A "video" that is really a playlist pointing to a URL.
     evil = tmp_path / "evil.m3u8"
     evil.write_text("#EXTM3U\n#EXT-X-TARGETDURATION:1\n#EXTINF:1,\nhttp://127.0.0.1:9/x.ts\n#EXT-X-ENDLIST\n")
     with pytest.raises(cli.Vid2GifError, match="not on whitelist 'file'"):

@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "vid2gif"
 dynamic = ["version"]
-description = "Convertit une vidéo (fichier ou lien X, YouTube…) en GIF, depuis le Finder ou la ligne de commande."
+description = "Turn a video (file or X, YouTube… link) into a GIF from Finder or the command line."
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.9"
@@ -29,8 +29,8 @@ target-version = "py39"
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "B", "UP", "S"]
-# UP031/UP032 : on garde le formatage % pour rester lisible ; S603/S607 : subprocess
-# est appelé sans shell, avec des listes d'arguments (revu, voir SECURITY.md).
+# UP031/UP032: keep %-formatting for readability; S603/S607: subprocess is called
+# without a shell, with argument lists (reviewed, see SECURITY.md).
 ignore = ["UP031", "UP032", "S603", "S607"]
 
 [tool.ruff.lint.per-file-ignores]
@@ -40,6 +40,6 @@ ignore = ["UP031", "UP032", "S603", "S607"]
 testpaths = ["tests"]
 
 [tool.bandit]
-# B404/B603/B607 : subprocess est utilisé volontairement, sans shell et avec des
-# listes d'arguments ; les outils (ffmpeg, yt-dlp…) sont résolus via le PATH.
+# B404/B603/B607: subprocess is used on purpose, without a shell and with argument
+# lists; tools (ffmpeg, yt-dlp…) are resolved through PATH.
 skips = ["B404", "B603", "B607"]

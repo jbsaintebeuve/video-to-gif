@@ -223,8 +223,8 @@ def setup(argv=()):
     print(
         "\nC'est prêt :\n"
         "  • Finder : clic droit sur une vidéo → Actions rapides → Convertir en GIF\n"
-        "  • Lien X copié → ⌃⌥⌘G (raccourci modifiable dans Réglages Système → Clavier → Raccourcis → Services)\n"
-        "Le GIF est copié dans le presse-papiers : collez-le avec ⌘V."
+        "  • Lien vidéo copié → ⌃⌥⌘G\n"
+        "Le GIF est copié : collez-le avec ⌘V."
     )
     return 0
 

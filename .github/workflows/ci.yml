@@ -28,6 +28,17 @@ jobs:
       - run: ruff check --output-format=github .
       - run: ruff format --check .
 
+  demo:
+    # assets/demo.svg doit être régénéré quand assets/demo/build.mjs change.
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: node assets/demo/build.mjs --check
+      - run: shellcheck assets/demo/scenario.sh
+
   test:
     name: test (${{ matrix.os }}, py${{ matrix.python }})
     runs-on: ${{ matrix.os }}

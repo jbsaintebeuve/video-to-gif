@@ -7,6 +7,8 @@
 
 Transforme une vidéo (un fichier local, ou un lien X / YouTube / Instagram / TikTok…) en GIF de bonne qualité, prêt à coller (⌘V) ou à enregistrer.
 
+<img src="assets/demo.svg" width="100%" alt="Démo animée : vid2gif setup installe les actions rapides et le raccourci ⌃⌥⌘G ; un lien X devient un GIF copié dans le presse-papiers, avec une notification « GIF prêt » ; une vidéo locale est découpée avec -s et -t puis allégée automatiquement sous 3 Mo.">
+
 ## Installation (macOS)
 
 ```sh
@@ -64,6 +66,8 @@ python3 -m venv .venv && .venv/bin/pip install pytest ruff
 .venv/bin/ruff check . && .venv/bin/ruff format --check .
 python3 -m vid2gif --help   # lancer depuis les sources
 ```
+
+La démo animée du README (`assets/demo.svg`) est générée par `node assets/demo/build.mjs`. Ses textes doivent correspondre à la sortie de `assets/demo/scenario.sh`, qui lance le vrai vid2gif. La CI échoue si le SVG n'est pas à jour.
 
 La CI (`.github/workflows/ci.yml`) lance le lint et les tests sur macOS, Linux et Windows. Elle installe aussi la formule Homebrew à partir des sources du commit, puis vérifie `brew test`, `brew audit` et `vid2gif setup`. Les contrôles de sécurité sont décrits dans [SECURITY.md](SECURITY.md).
 

@@ -37,9 +37,6 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
         python: ["3.13"]
-        include:
-          - os: ubuntu-latest
-            python: "3.9" # version de /usr/bin/python3 sur macOS
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -58,6 +55,19 @@ jobs:
         run: choco install ffmpeg -y --no-progress
       - run: pip install pytest
       - run: python -m pytest -v
+
+  macos-system-python:
+    # Le /usr/bin/python3 fourni par Apple (3.9) : celui des Mac sans Python Homebrew.
+    runs-on: macos-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: brew install ffmpeg
+      - run: /usr/bin/python3 --version && /usr/bin/python3 -m venv "$RUNNER_TEMP/venv"
+      - run: '"$RUNNER_TEMP/venv/bin/pip" install pytest'
+      - run: '"$RUNNER_TEMP/venv/bin/python" -m pytest -v'
 
   homebrew:
     # Installe la formule depuis les sources du commit, comme le ferait un utilisateur.

@@ -393,8 +393,16 @@ def convert_all(args):
     return 0
 
 
+def safe_console():
+    """Les consoles Windows (cp1252) ne savent pas afficher → ✓… : on remplace au lieu de planter."""
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(errors="replace")
+
+
 def main(argv=None):
     argv = list(sys.argv[1:] if argv is None else argv)
+    safe_console()
     extend_path()
     # Sous-commandes : `vid2gif setup` / `vid2gif uninstall` (sauf si un fichier porte ce nom).
     if argv and argv[0] in ("setup", "uninstall") and not Path(argv[0]).exists():

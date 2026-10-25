@@ -1,0 +1,96 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_call:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+      - run: pip install ruff==0.17.2
+      - run: ruff check --output-format=github .
+      - run: ruff format --check .
+
+  test:
+    name: test (${{ matrix.os }}, py${{ matrix.python }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python: ["3.13"]
+        include:
+          - os: ubuntu-latest
+            python: "3.9" # version de /usr/bin/python3 sur macOS
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install ffmpeg (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update -q && sudo apt-get install -yq ffmpeg
+      - name: Install ffmpeg (macOS)
+        if: runner.os == 'macOS'
+        run: brew install ffmpeg
+      - name: Install ffmpeg (Windows)
+        if: runner.os == 'Windows'
+        run: choco install ffmpeg -y --no-progress
+      - run: pip install pytest
+      - run: python -m pytest -v
+
+  homebrew:
+    # Installe la formule depuis les sources du commit, comme le ferait un utilisateur.
+    runs-on: macos-latest
+    timeout-minutes: 30
+    env:
+      HOMEBREW_NO_AUTO_UPDATE: "1"
+      HOMEBREW_NO_INSTALL_CLEANUP: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Render formula for this commit
+        run: |
+          version=$(sed -n 's/^__version__ = "\(.*\)"/\1/p' vid2gif/__init__.py)
+          git archive --prefix="video-to-gif-$version/" -o "$RUNNER_TEMP/src.tar.gz" HEAD
+          sha=$(shasum -a 256 "$RUNNER_TEMP/src.tar.gz" | cut -d' ' -f1)
+          brew tap-new --no-git ci/local
+          tap=$(brew --repository ci/local)
+          sed -e "s|^  url .*|  url \"file://$RUNNER_TEMP/src.tar.gz\"\n  version \"$version\"|" \
+              -e "s|@SHA256@|$sha|" \
+              packaging/homebrew/vid2gif.rb > "$tap/Formula/vid2gif.rb"
+          cat "$tap/Formula/vid2gif.rb"
+      - run: brew style ci/local/vid2gif
+      - run: brew install ci/local/vid2gif
+      - run: brew test ci/local/vid2gif
+      - run: brew audit --strict ci/local/vid2gif
+      - name: vid2gif setup creates valid Quick Actions
+        run: |
+          vid2gif setup
+          for wf in ~/Library/Services/*.workflow; do
+            plutil -lint "$wf/Contents/Info.plist" "$wf/Contents/document.wflow"
+            plutil -extract actions.0.action.ActionParameters.COMMAND_STRING raw "$wf/Contents/document.wflow" \
+              | grep -q "$(brew --prefix)/opt/vid2gif/bin/vid2gif"
+          done
+          vid2gif uninstall

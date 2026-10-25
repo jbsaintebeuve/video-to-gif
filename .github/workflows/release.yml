@@ -1,0 +1,73 @@
+name: Release
+
+# Pousser un tag vX.Y.Z (identique à vid2gif/__init__.py) publie la release GitHub
+# et met à jour la formule dans jbsaintebeuve/homebrew-tap.
+on:
+  push:
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+
+  release:
+    needs: ci
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write # création de la release GitHub
+    env:
+      TAG: ${{ github.ref_name }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Tag matches package version
+        run: |
+          version=$(sed -n 's/^__version__ = "\(.*\)"/\1/p' vid2gif/__init__.py)
+          test "v$version" = "$TAG" || { echo "::error::tag $TAG ≠ version $version"; exit 1; }
+      - name: Create GitHub release
+        run: gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --title "$TAG" --generate-notes --verify-tag
+
+  homebrew-tap:
+    needs: release
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: release # permet d'exiger une validation manuelle avant publication
+    env:
+      TAG: ${{ github.ref_name }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          path: src
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: jbsaintebeuve/homebrew-tap
+          path: tap
+          persist-credentials: false
+      - name: Render formula
+        run: |
+          version="${TAG#v}"
+          url="https://github.com/${GITHUB_REPOSITORY}/archive/refs/tags/${TAG}.tar.gz"
+          curl -fsSL --retry 5 -o src.tar.gz "$url"
+          sha=$(sha256sum src.tar.gz | cut -d' ' -f1)
+          mkdir -p tap/Formula
+          sed -e "s|@VERSION@|$version|g" -e "s|@SHA256@|$sha|g" \
+            src/packaging/homebrew/vid2gif.rb > tap/Formula/vid2gif.rb
+          cat tap/Formula/vid2gif.rb
+      - name: Push to tap
+        working-directory: tap
+        env:
+          # PAT fine-grained : Contents R/W sur jbsaintebeuve/homebrew-tap uniquement.
+          TAP_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Formula/vid2gif.rb
+          git commit -m "vid2gif ${TAG#v}"
+          git push "https://x-access-token:${TAP_TOKEN}@github.com/jbsaintebeuve/homebrew-tap.git" HEAD:main

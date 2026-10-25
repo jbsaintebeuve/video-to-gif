@@ -12,11 +12,12 @@ Turn a video into a good-looking GIF, ready to paste (⌘V) or save. The video c
 ## Install (macOS)
 
 ```sh
+brew trust --formula jbsaintebeuve/tap/vid2gif
 brew install jbsaintebeuve/tap/vid2gif
 vid2gif setup
 ```
 
-Homebrew also installs `ffmpeg` and `yt-dlp`. `vid2gif setup` then adds:
+Since Homebrew 7, formulas from third-party taps must be trusted before they load. `brew trust --formula` trusts only this formula, not the whole tap. Homebrew also installs `ffmpeg` and `yt-dlp`. `vid2gif setup` then adds:
 
 | Where | Quick Action | What it does |
 |---|---|---|

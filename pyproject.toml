@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vid2gif"
+dynamic = ["version"]
+description = "Turn a video (file or X, YouTube… link) into a GIF from Finder or the command line."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/jbsaintebeuve/video-to-gif"
+
+[project.scripts]
+vid2gif = "vid2gif.cli:entry"
+
+[tool.setuptools]
+packages = ["vid2gif"]
+
+[tool.setuptools.dynamic]
+version = { attr = "vid2gif.__version__" }
+
+[tool.ruff]
+line-length = 120
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S"]
+# UP031/UP032: keep %-formatting for readability; S603/S607: subprocess is called
+# without a shell, with argument lists (reviewed, see SECURITY.md).
+ignore = ["UP031", "UP032", "S603", "S607"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101", "S108"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.bandit]
+# B404/B603/B607: subprocess is used on purpose, without a shell and with argument
+# lists; tools (ffmpeg, yt-dlp…) are resolved through PATH.
+skips = ["B404", "B603", "B607"]

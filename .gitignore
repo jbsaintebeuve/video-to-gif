@@ -1,0 +1,4 @@
+__pycache__/
+*.gif
+*.mp4
+.DS_Store

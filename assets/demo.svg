@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 415" width="900" height="415" xml:space="preserve" role="img" aria-label="vid2gif demo: vid2gif setup installs the Quick Actions and the ⌃⌥⌘G shortcut; an X link becomes a GIF copied to the clipboard, with a notification; a local video is trimmed and automatically shrunk under 3 MB.">
+<style>
+@keyframes k0{0.000%{opacity:0}0.000%{opacity:0}1.222%{opacity:1}21.303%{opacity:1}22.525%{opacity:0}100.000%{opacity:0}}
+.k0{animation:k0 24.55s linear infinite}
+@keyframes k1{0.000%{transform:translateX(0)}3.259%{transform:translateX(0);animation-timing-function:steps(13,end)}5.377%{transform:translateX(113.1px)}100.000%{transform:translateX(113.1px)}}
+.k1{animation:k1 24.55s linear infinite}
+@keyframes k2{0.000%{opacity:1}6.273%{opacity:1}6.314%{opacity:0}100.000%{opacity:0}}
+.k2{animation:k2 24.55s linear infinite}
+@keyframes k3{0.000%{opacity:0}1.426%{opacity:0}1.914%{opacity:1}100.000%{opacity:1}}
+.k3{animation:k3 24.55s linear infinite}
+@keyframes k4{0.000%{opacity:0}8.310%{opacity:0}8.798%{opacity:1}100.000%{opacity:1}}
+.k4{animation:k4 24.55s linear infinite}
+@keyframes k5{0.000%{opacity:0}9.043%{opacity:0}9.532%{opacity:1}100.000%{opacity:1}}
+.k5{animation:k5 24.55s linear infinite}
+@keyframes k6{0.000%{opacity:0}9.776%{opacity:0}10.265%{opacity:1}100.000%{opacity:1}}
+.k6{animation:k6 24.55s linear infinite}
+@keyframes k7{0.000%{transform:scaleX(0)}10.916%{transform:scaleX(0);animation-timing-function:cubic-bezier(.2,.8,.2,1)}12.749%{transform:scaleX(1)}100.000%{transform:scaleX(1)}}
+.k7{animation:k7 24.55s linear infinite}
+@keyframes k8{0.000%{transform:scale(0)}10.835%{transform:scale(0);animation-timing-function:cubic-bezier(.3,1.6,.6,1)}11.976%{transform:scale(1)}100.000%{transform:scale(1)}}
+.k8{animation:k8 24.55s linear infinite}
+@keyframes k9{0.000%{opacity:0}10.509%{opacity:0}10.998%{opacity:1}100.000%{opacity:1}}
+.k9{animation:k9 24.55s linear infinite}
+@keyframes k10{0.000%{opacity:0}11.731%{opacity:0}12.220%{opacity:1}100.000%{opacity:1}}
+.k10{animation:k10 24.55s linear infinite}
+@keyframes k11{0.000%{opacity:0}12.016%{opacity:0}12.505%{opacity:1}100.000%{opacity:1}}
+.k11{animation:k11 24.55s linear infinite}
+@keyframes k12{0.000%{transform:scaleX(0)}12.709%{transform:scaleX(0);animation-timing-function:cubic-bezier(.2,.8,.2,1)}14.542%{transform:scaleX(1)}100.000%{transform:scaleX(1)}}
+.k12{animation:k12 24.55s linear infinite}
+@keyframes k13{0.000%{opacity:0}12.301%{opacity:0}12.790%{opacity:1}100.000%{opacity:1}}
+.k13{animation:k13 24.55s linear infinite}
+@keyframes k14{0.000%{transform:scaleX(0)}12.994%{transform:scaleX(0);animation-timing-function:cubic-bezier(.2,.8,.2,1)}14.827%{transform:scaleX(1)}100.000%{transform:scaleX(1)}}
+.k14{animation:k14 24.55s linear infinite}
+@keyframes k15{0.000%{opacity:0}12.587%{opacity:0}13.075%{opacity:1}100.000%{opacity:1}}
+.k15{animation:k15 24.55s linear infinite}
+@keyframes k16{0.000%{opacity:0}12.872%{opacity:0}13.360%{opacity:1}100.000%{opacity:1}}
+.k16{animation:k16 24.55s linear infinite}
+@keyframes k17{0.000%{opacity:1}13.157%{opacity:1}100.000%{opacity:1}}
+.k17{animation:k17 24.55s linear infinite}
+@keyframes k18{0.000%{opacity:0}13.157%{opacity:0}13.646%{opacity:1}100.000%{opacity:1}}
+.k18{animation:k18 24.55s linear infinite}
+@keyframes k19{0.000%{opacity:0}22.525%{opacity:0}23.747%{opacity:1}66.151%{opacity:1}67.373%{opacity:0}100.000%{opacity:0}}
+.k19{animation:k19 24.55s linear infinite}
+@keyframes k20{0.000%{transform:translateX(0)}25.784%{transform:translateX(0);animation-timing-function:steps(68,end)}36.864%{transform:translateX(591.6px)}100.000%{transform:translateX(591.6px)}}
+.k20{animation:k20 24.55s linear infinite}
+@keyframes k21{0.000%{opacity:1}37.760%{opacity:1}37.800%{opacity:0}100.000%{opacity:0}}
+.k21{animation:k21 24.55s linear infinite}
+@keyframes k22{0.000%{opacity:0}23.951%{opacity:0}24.440%{opacity:1}100.000%{opacity:1}}
+.k22{animation:k22 24.55s linear infinite}
+@keyframes k23{0.000%{opacity:0}38.574%{opacity:0}39.063%{opacity:1}100.000%{opacity:1}}
+.k23{animation:k23 24.55s linear infinite}
+@keyframes k24{0.000%{opacity:0}43.870%{opacity:0}44.358%{opacity:1}100.000%{opacity:1}}
+.k24{animation:k24 24.55s linear infinite}
+@keyframes k25{0.000%{transform:scaleX(0)}50.794%{transform:scaleX(0);animation-timing-function:cubic-bezier(.2,.8,.2,1)}52.627%{transform:scaleX(1)}100.000%{transform:scaleX(1)}}
+.k25{animation:k25 24.55s linear infinite}
+@keyframes k26{0.000%{transform:scale(0)}50.713%{transform:scale(0);animation-timing-function:cubic-bezier(.3,1.6,.6,1)}51.853%{transform:scale(1)}100.000%{transform:scale(1)}}
+.k26{animation:k26 24.55s linear infinite}
+@keyframes k27{0.000%{opacity:0}50.387%{opacity:0}50.876%{opacity:1}100.000%{opacity:1}}
+.k27{animation:k27 24.55s linear infinite}
+@keyframes k28{0.000%{opacity:1}53.116%{opacity:1}100.000%{opacity:1}}
+.k28{animation:k28 24.55s linear infinite}
+@keyframes k29{0.000%{opacity:0}53.116%{opacity:0}53.605%{opacity:1}100.000%{opacity:1}}
+.k29{animation:k29 24.55s linear infinite}
+@keyframes k30{0.000%{transform:translateX(420px)}51.690%{transform:translateX(420px);animation-timing-function:cubic-bezier(.16,1,.3,1)}53.931%{transform:translateX(0)}100.000%{transform:translateX(0)}}
+.k30{animation:k30 24.55s linear infinite}
+@keyframes k31{0.000%{opacity:0}67.373%{opacity:0}68.595%{opacity:1}98.778%{opacity:1}100.000%{opacity:0}100.000%{opacity:0}}
+.k31{animation:k31 24.55s linear infinite}
+@keyframes k32{0.000%{transform:translateX(0)}70.631%{transform:translateX(0);animation-timing-function:steps(48,end)}78.452%{transform:translateX(417.6px)}100.000%{transform:translateX(417.6px)}}
+.k32{animation:k32 24.55s linear infinite}
+@keyframes k33{0.000%{opacity:1}79.348%{opacity:1}79.389%{opacity:0}100.000%{opacity:0}}
+.k33{animation:k33 24.55s linear infinite}
+@keyframes k34{0.000%{opacity:0}68.798%{opacity:0}69.287%{opacity:1}100.000%{opacity:1}}
+.k34{animation:k34 24.55s linear infinite}
+@keyframes k35{0.000%{opacity:0}80.163%{opacity:0}80.652%{opacity:1}100.000%{opacity:1}}
+.k35{animation:k35 24.55s linear infinite}
+@keyframes k36{0.000%{transform:scaleX(0)}85.866%{transform:scaleX(0);animation-timing-function:cubic-bezier(.2,.8,.2,1)}87.699%{transform:scaleX(1)}100.000%{transform:scaleX(1)}}
+.k36{animation:k36 24.55s linear infinite}
+@keyframes k37{0.000%{opacity:0}85.458%{opacity:0}85.947%{opacity:1}100.000%{opacity:1}}
+.k37{animation:k37 24.55s linear infinite}
+@keyframes k38{0.000%{transform:scaleX(0)}90.754%{transform:scaleX(0);animation-timing-function:cubic-bezier(.2,.8,.2,1)}92.587%{transform:scaleX(1)}100.000%{transform:scaleX(1)}}
+.k38{animation:k38 24.55s linear infinite}
+@keyframes k39{0.000%{transform:scale(0)}90.672%{transform:scale(0);animation-timing-function:cubic-bezier(.3,1.6,.6,1)}91.813%{transform:scale(1)}100.000%{transform:scale(1)}}
+.k39{animation:k39 24.55s linear infinite}
+@keyframes k40{0.000%{opacity:0}90.346%{opacity:0}90.835%{opacity:1}100.000%{opacity:1}}
+.k40{animation:k40 24.55s linear infinite}
+@keyframes k41{0.000%{opacity:1}90.631%{opacity:1}100.000%{opacity:1}}
+.k41{animation:k41 24.55s linear infinite}
+@keyframes k42{0.000%{opacity:0}90.631%{opacity:0}91.120%{opacity:1}100.000%{opacity:1}}
+.k42{animation:k42 24.55s linear infinite}
+@keyframes k43{0.000%{opacity:0}0.000%{opacity:0}1.222%{opacity:1}21.303%{opacity:1}22.525%{opacity:0}100.000%{opacity:0}}
+.k43{animation:k43 24.55s linear infinite}
+@keyframes k44{0.000%{opacity:0}22.525%{opacity:0}23.747%{opacity:1}66.151%{opacity:1}67.373%{opacity:0}100.000%{opacity:0}}
+.k44{animation:k44 24.55s linear infinite}
+@keyframes k45{0.000%{opacity:0}67.373%{opacity:0}68.595%{opacity:1}98.778%{opacity:1}100.000%{opacity:0}100.000%{opacity:0}}
+.k45{animation:k45 24.55s linear infinite}
+@keyframes k46{0.000%{opacity:0}0.000%{opacity:0}0.815%{opacity:1}21.711%{opacity:1}22.525%{opacity:0}100.000%{opacity:0}}
+.k46{animation:k46 24.55s linear infinite}
+@keyframes k47{0.000%{opacity:0}22.525%{opacity:0}23.340%{opacity:1}66.558%{opacity:1}67.373%{opacity:0}100.000%{opacity:0}}
+.k47{animation:k47 24.55s linear infinite}
+@keyframes k48{0.000%{opacity:0}67.373%{opacity:0}68.187%{opacity:1}99.185%{opacity:1}100.000%{opacity:0}100.000%{opacity:0}}
+.k48{animation:k48 24.55s linear infinite}
+@keyframes k49{0.000%{transform:scaleX(0)}0.000%{transform:scaleX(0)}100.000%{transform:scaleX(1)}100.000%{transform:scaleX(1)}}
+.k49{animation:k49 24.55s linear infinite}
+text{font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;font-size:14.5px;fill:#d5dae4;white-space:pre;font-variant-ligatures:none}
+.cap,.tt,.tb,.tm,.tk,.icon{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+.cap{font-size:12.5px;fill:#8d96a8;letter-spacing:.01em}
+.tt{font-size:13px;font-weight:600;fill:#eef1f6}.tb{font-size:12px;fill:#b4bccb}.tm{font-size:11px;fill:#7b8496}
+.tk{font-size:11.5px;fill:#9ece6a}.key{font-weight:700}.icon{font-size:14px;font-weight:600;fill:#fff}
+.path{fill:#7aa2f7}.sigil{fill:#4f5872}.cmd{fill:#7dcfff}.tool{fill:#34d399;font-weight:700}
+.text{fill:#d5dae4}.dim{fill:#7b8496}.red{fill:#ff7a90}.green{fill:#9ece6a}.yellow{fill:#e8b86b}.b{font-weight:700}
+.blink{animation:blink 1.05s steps(1) infinite}@keyframes blink{50%{opacity:0}}
+</style>
+<defs>
+<filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000" flood-opacity=".35"/></filter>
+<filter id="toastShadow" x="-10%" y="-20%" width="120%" height="160%"><feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#000" flood-opacity=".45"/></filter>
+<clipPath id="win"><rect width="860" height="375" rx="11"/></clipPath>
+</defs>
+<g transform="translate(20 20)">
+<rect width="860" height="375" rx="11" fill="#0f1117" filter="url(#shadow)"/>
+<g clip-path="url(#win)">
+<rect width="860" height="375" fill="#0f1117"/>
+<rect width="860" height="40" fill="#161922"/>
+<rect y="40" width="860" height="1" fill="#262b36"/>
+<circle cx="22" cy="20" r="6" fill="#ff5f57"/><circle cx="42" cy="20" r="6" fill="#febc2e"/><circle cx="62" cy="20" r="6" fill="#28c840"/>
+<text class="cap k43" x="430" y="24.5" text-anchor="middle">vid2gif setup: the right-click action and ⌃⌥⌘G in one command</text><text class="cap k44" x="430" y="24.5" text-anchor="middle">An X link → a GIF already on your clipboard</text><text class="cap k45" x="430" y="24.5" text-anchor="middle">A local video: trimmed, then shrunk automatically</text>
+<circle cx="796" cy="20" r="3.5" fill="#262b36"/><circle class="k46" cx="796" cy="20" r="3.5" fill="#34d399"/><circle cx="812" cy="20" r="3.5" fill="#262b36"/><circle class="k47" cx="812" cy="20" r="3.5" fill="#34d399"/><circle cx="828" cy="20" r="3.5" fill="#262b36"/><circle class="k48" cx="828" cy="20" r="3.5" fill="#34d399"/>
+<g class="k0"><g class="k3"><text xml:space="preserve" x="46" y="74" textLength="147.9" lengthAdjust="spacing"><tspan class="path">~</tspan><tspan class="sigil"> $ </tspan><tspan class="tool">vid2gif</tspan><tspan class="text"> setup</tspan></text><g transform="translate(80.8 0)"><g class="k1"><rect x="8.7" y="57" width="860" height="23" fill="#0f1117"/><rect class="k2" y="60" width="8.7" height="18" rx="1.5" fill="#34d399"/></g></g></g><g class="k4"><text xml:space="preserve" x="46" y="99" textLength="269.7" lengthAdjust="spacing"><tspan class="green b">✓</tspan><tspan class="text"> Quick Action "Convert to GIF"</tspan></text></g><g class="k5"><text xml:space="preserve" x="46" y="124" textLength="295.8" lengthAdjust="spacing"><tspan class="green b">✓</tspan><tspan class="text"> Quick Action "Video Link to GIF"</tspan></text></g><g class="k6"><text xml:space="preserve" x="46" y="149" textLength="321.9" lengthAdjust="spacing"><tspan class="green b">✓</tspan><tspan class="text"> Quick Action "GIF from Copied Link"</tspan></text></g><g class="k9"><g transform="translate(41 157)"><rect class="k7" width="358.0" height="23" rx="5" fill="rgba(158,206,106,.14)"/></g><text xml:space="preserve" x="46" y="174" textLength="348.0" lengthAdjust="spacing"><tspan class="green b">✓</tspan><tspan class="text"> Shortcut ⌃⌥⌘G → "GIF from Copied Link"</tspan></text><g transform="translate(24 169.5)"><g class="k8"><circle r="8" fill="#9ece6a" fill-opacity=".16" stroke="#9ece6a" stroke-width="1.2"/><g fill="none" stroke="#9ece6a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M-3.4 0.2 L-1 2.6 L3.6 -2.4" /></g></g></g></g><g class="k10"><text xml:space="preserve" x="46" y="199" textLength="0.0" lengthAdjust="spacing"><tspan class="text"></tspan></text></g><g class="k11"><text xml:space="preserve" x="46" y="224" textLength="52.2" lengthAdjust="spacing"><tspan class="text b">Ready:</tspan></text></g><g class="k13"><g transform="translate(336.79999999999995 232)"><rect class="k12" width="271.0" height="23" rx="5" fill="rgba(52,211,153,.11)"/></g><text xml:space="preserve" x="46" y="249" textLength="556.8" lengthAdjust="spacing"><tspan class="dim">  • Finder: right-click a video → </tspan><tspan class="text">Quick Actions → Convert to GIF</tspan></text></g><g class="k15"><g transform="translate(249.79999999999998 257)"><rect class="k14" width="44.8" height="23" rx="5" fill="rgba(52,211,153,.11)"/></g><text xml:space="preserve" x="46" y="274" textLength="243.6" lengthAdjust="spacing"><tspan class="dim">  • Copied video link → </tspan><tspan class="tool">⌃⌥⌘G</tspan></text></g><g class="k16"><text xml:space="preserve" x="46" y="299" textLength="435.0" lengthAdjust="spacing"><tspan class="dim">The GIF lands on your clipboard: paste it with ⌘V.</tspan></text></g><g class="k18"><text xml:space="preserve" x="46" y="324" textLength="34.8" lengthAdjust="spacing"><tspan class="path">~</tspan><tspan class="sigil"> $ </tspan></text><g class="k17"><rect class="blink" x="80.8" y="310" width="8.7" height="18" rx="1.5" fill="#34d399"/></g></g></g>
+<g class="k19"><g class="k22"><text xml:space="preserve" x="46" y="74" textLength="626.4" lengthAdjust="spacing"><tspan class="path">~</tspan><tspan class="sigil"> $ </tspan><tspan class="tool">vid2gif</tspan><tspan class="text"> https://x.com/weirdnotwild/status/2114199180243857583 --copy</tspan></text><g transform="translate(80.8 0)"><g class="k20"><rect x="8.7" y="57" width="860" height="23" fill="#0f1117"/><rect class="k21" y="60" width="8.7" height="18" rx="1.5" fill="#34d399"/></g></g></g><g class="k23"><text xml:space="preserve" x="46" y="99" textLength="478.5" lengthAdjust="spacing"><tspan class="cmd">↓ </tspan><tspan class="dim">https://x.com/weirdnotwild/status/2114199180243857583</tspan></text></g><g class="k24"><text xml:space="preserve" x="46" y="124" textLength="435.0" lengthAdjust="spacing"><tspan class="cmd">→ </tspan><tspan class="path">~/Downloads/weirdnotwild_2114199158982606849.gif</tspan></text></g><g class="k27"><g transform="translate(41 132)"><rect class="k25" width="218.8" height="23" rx="5" fill="rgba(158,206,106,.14)"/></g><text xml:space="preserve" x="46" y="149" textLength="208.8" lengthAdjust="spacing"><tspan class="green b">✓</tspan><tspan class="green b"> 5.0 MB (480px, 15 fps)</tspan></text><g transform="translate(24 144.5)"><g class="k26"><circle r="8" fill="#9ece6a" fill-opacity=".16" stroke="#9ece6a" stroke-width="1.2"/><g fill="none" stroke="#9ece6a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M-3.4 0.2 L-1 2.6 L3.6 -2.4" /></g></g></g></g><g class="k29"><text xml:space="preserve" x="46" y="174" textLength="34.8" lengthAdjust="spacing"><tspan class="path">~</tspan><tspan class="sigil"> $ </tspan></text><g class="k28"><rect class="blink" x="80.8" y="160" width="8.7" height="18" rx="1.5" fill="#34d399"/></g></g><g transform="translate(458 193)"><g class="k30"><rect width="384" height="80" rx="13" fill="#1d2130" stroke="#323848" filter="url(#toastShadow)"/><rect x="14" y="21" width="38" height="38" rx="9" fill="#059669"/><text class="icon" x="33" y="45" text-anchor="middle">VT</text><text class="tt" x="64" y="28">GIF ready</text><g transform="translate(139 23.5)"><circle r="6.5" fill="#9ece6a" fill-opacity=".18" stroke="#9ece6a" stroke-width="1"/><path d="M-2.8 0.2 L-0.8 2.2 L3 -2" fill="none" stroke="#9ece6a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g><text class="tb" x="64" y="47">weirdnotwild_2114199158982606849.gif — 5.0 MB</text><text class="tm" x="370" y="28" text-anchor="end">now</text><text class="tk" x="64" y="65">copied, paste with <tspan class="key">⌘V</tspan></text></g></g></g>
+<g class="k31"><g class="k34"><text xml:space="preserve" x="46" y="74" textLength="452.4" lengthAdjust="spacing"><tspan class="path">~</tspan><tspan class="sigil"> $ </tspan><tspan class="tool">vid2gif</tspan><tspan class="text"> Movies/holiday.mov -s 12 -t 4 --max-mb 3</tspan></text><g transform="translate(80.8 0)"><g class="k32"><rect x="8.7" y="57" width="860" height="23" fill="#0f1117"/><rect class="k33" y="60" width="8.7" height="18" rx="1.5" fill="#34d399"/></g></g></g><g class="k35"><text xml:space="preserve" x="46" y="99" textLength="191.4" lengthAdjust="spacing"><tspan class="cmd">→ </tspan><tspan class="path">~/Movies/holiday.gif</tspan></text></g><g class="k37"><g transform="translate(58.4 107)"><rect class="k36" width="358.0" height="23" rx="5" fill="rgba(232,184,107,.12)"/></g><text xml:space="preserve" x="46" y="124" textLength="365.4" lengthAdjust="spacing"><tspan class="yellow">  5.0 MB &gt; 3.0 MB limit, retrying smaller…</tspan></text></g><g class="k40"><g transform="translate(41 132)"><rect class="k38" width="218.8" height="23" rx="5" fill="rgba(158,206,106,.14)"/></g><text xml:space="preserve" x="46" y="149" textLength="208.8" lengthAdjust="spacing"><tspan class="green b">✓</tspan><tspan class="green b"> 2.9 MB (372px, 15 fps)</tspan></text><g transform="translate(24 144.5)"><g class="k39"><circle r="8" fill="#9ece6a" fill-opacity=".16" stroke="#9ece6a" stroke-width="1.2"/><g fill="none" stroke="#9ece6a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M-3.4 0.2 L-1 2.6 L3.6 -2.4" /></g></g></g></g><g class="k42"><text xml:space="preserve" x="46" y="174" textLength="34.8" lengthAdjust="spacing"><tspan class="path">~</tspan><tspan class="sigil"> $ </tspan></text><g class="k41"><rect class="blink" x="80.8" y="160" width="8.7" height="18" rx="1.5" fill="#34d399"/></g></g></g>
+<rect class="k49" y="373" width="860" height="2" fill="#34d399" fill-opacity=".55"/>
+</g>
+<rect x=".5" y=".5" width="859" height="374" rx="10.5" fill="none" stroke="#262b36"/>
+</g>
+</svg>

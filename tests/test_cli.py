@@ -54,6 +54,14 @@ def test_unique_path(tmp_path):
     assert cli.unique_path(first) == tmp_path / "a-3.gif"
 
 
+def test_unique_path_reuses_first_available_number(tmp_path):
+    original = tmp_path / "a.gif"
+    original.touch()
+    (tmp_path / "a-3.gif").touch()
+
+    assert cli.unique_path(original) == tmp_path / "a-2.gif"
+
+
 def test_expand_inputs_extracts_urls_from_text():
     text = "look at this https://x.com/weirdnotwild/status/2114199180243857583 !"
     assert cli.expand_inputs([text]) == ["https://x.com/weirdnotwild/status/2114199180243857583"]
